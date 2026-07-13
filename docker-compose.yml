@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: scraptrack-postgres
+    environment:
+      POSTGRES_USER: scraptrack_user
+      POSTGRES_PASSWORD: secure_dev_password
+      POSTGRES_DB: scraptrack_production
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - scraptrack_network
+
+  web:
+    build: .
+    container_name: scraptrack-api
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://scraptrack_user:secure_dev_password@db:5432/scraptrack_production
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    networks:
+      - scraptrack_network
+
+volumes:
+  postgres_data:
+
+networks:
+  scraptrack_network:
