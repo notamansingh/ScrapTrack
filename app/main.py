@@ -1,12 +1,7 @@
 from fastapi import FastAPI
+from app.routers import materials
 
-app = FastAPI(
-    title="ScrapTrack API",
-    description="Circular economy material ledger for Australian trade assets.",
-    version="0.1.0"
-)
+app = FastAPI()
 
-@app.get("/health")
-async def health_check():
-    """Simple status check to verify the API thread is active."""
-    return {"status": "healthy", "engine": "running"}
+# Make sure your router is registered here like before
+app.include_router(materials.router)
