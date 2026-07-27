@@ -1,6 +1,7 @@
 from enum import Enum
 from typing import Optional
 from sqlmodel import SQLModel, Field
+import datetime
 
 # 1. Define the MetalGrade Enum used by your seed script
 class MetalGrade(str, Enum):
@@ -25,3 +26,11 @@ class EnvironmentalMatrix(EnvironmentalMatrixBase, table=True):
     __tablename__ = "environmental_matrix"
 
     id: Optional[int] = Field(default=None, primary_key=True)
+
+class Disposal(SQLModel, table = True):
+    id: Optional[int] = Field(default= None, primary_key= True)
+    driver_name: str
+    total_weight_kg: float
+    estimated_payout_aud: float
+    image_key: Optional[str] = Field(default=None)
+    created_at: datetime = Field(default_factory=datetime.utcnow)
