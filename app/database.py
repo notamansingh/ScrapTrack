@@ -6,7 +6,7 @@ from sqlmodel.ext.asyncio.session import AsyncSession
 from sqlmodel import SQLModel
 
 # Import all models so SQLModel metadata registers them before create_all is called
-from app.models import EnvironmentalMatrix  
+from app.models import EnvironmentalMatrix, Disposal
 
 # Updated for native local execution
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+asyncpg://postgres:postgres@localhost:5432/scraptrack")

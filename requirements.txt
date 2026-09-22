@@ -4,3 +4,5 @@ asyncpg>=0.29.0
 pydantic-settings>=2.2.1
 uvicorn>=0.28.0
 aioboto3>=13.0.0
+python-dotenv>=1.0.1
+python-multipart>=0.0.9

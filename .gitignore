@@ -1,6 +1,11 @@
 __pycache__/
 *.pyc
 .env
+.env.local
 .venv
 env/
 /uploads/
+node_modules/
+.next/
+/CLAUDE.md
+/AGENTS.md

@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import Optional
 from sqlmodel import SQLModel, Field
-import datetime
+from datetime import datetime, timezone
 
 # 1. Define the MetalGrade Enum used by your seed script
 class MetalGrade(str, Enum):
@@ -30,7 +30,32 @@ class EnvironmentalMatrix(EnvironmentalMatrixBase, table=True):
 class Disposal(SQLModel, table = True):
     id: Optional[int] = Field(default= None, primary_key= True)
     driver_name: str
+    metal_grade: MetalGrade
     total_weight_kg: float
     estimated_payout_aud: float
     image_key: Optional[str] = Field(default=None)
-    created_at: datetime = Field(default_factory=datetime.utcnow)
+    created_at: datetime = Field(
+        default_factory=lambda: datetime.now(timezone.utc).replace(tzinfo=None)
+    )
+
+class DisposalCreate(SQLModel):
+    driver_name: str
+    metal_grade: MetalGrade
+    total_weight_kg: float
+    estimated_payout_aud: float
+
+
+class DisposalRead(SQLModel):
+    id: int
+    driver_name: str
+    metal_grade: MetalGrade
+    total_weight_kg: float
+    estimated_payout_aud: float
+    created_at: datetime
+    receipt_url: Optional[str] = None
+
+
+class DashboardSummary(SQLModel):
+    total_weight_kg: float
+    total_valuation_aud: float
+    carbon_mitigation_tons: float
